@@ -1,18 +1,23 @@
 import React, {useState} from 'react';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
+// TODO: add user written sensor names to the global list of sensor names
 export default function EntryForm(props) {
     const [collectingData, setCollectingData] = useState(false);
-    const [sensor, setSensor] = React.useState("");
-    const [startTime, setStartTime] = React.useState(new Date());
-    const [X, setX] = React.useState(0);
-    const [Y, setY] = React.useState(0);
-    const [soilMoisture, setSoilMoisture] = React.useState(0);
-    const [soilTemp, setSoilTemp] = React.useState(0);
+    const [sensor, setSensor] = useState("");
+    const [startTime, setStartTime] = useState(new Date());
+    const [X, setX] = useState(0);
+    const [Y, setY] = useState(0);
+    const [soilMoisture, setSoilMoisture] = useState(0);
+    const [soilTemp, setSoilTemp] = useState(0);
     // const [coordinates, setCoordinates] = React.useState([]); // N, W
-    const [vegHeight, setVegHeight] = React.useState(0); // cm
-    const [vegType, setVegType] = React.useState(""); // text input for now
+    const [vegHeight, setVegHeight] = useState(0); // cm
+    const [vegType, setVegType] = useState(""); // text input for now
     // const [percentCover, setPercentCover] = React.useState(0); TODO activate once automated
-    const [notes, setNotes] = React.useState("");
+    const [notes, setNotes] = useState("");
 
     function startCollecting() {
         setStartTime(new Date());
@@ -73,7 +78,7 @@ export default function EntryForm(props) {
         var endTime = new Date(startTime.getTime() + 10 * 60000);
         return (
             <div>
-                <button onClick={addEntryWithGPS}>End Data Collection</button>
+                <Button id="add-entry-gps" variant="contained" onClick={addEntryWithGPS}>End Data Collection</Button>
                 <h2>Your data collection started at {startTime.getHours()}:{startTime.getMinutes()}.</h2>
                 <h2>Your data collection should end at {endTime.getHours()}:{endTime.getMinutes()}.</h2>
             </div>
@@ -81,23 +86,36 @@ export default function EntryForm(props) {
     } else {
         return (
             <div>
-                <label>Sensor Name (first letter capitalized, no spaces)</label>
-                <input id="sensor" onChange={(e) => setSensor(e.target.value)}></input>
-                <label>X</label>
-                <input id="x" onChange={(e) => setX(e.target.value)}></input>
-                <label>Y</label>
-                <input id="y" onChange={(e) => setY(e.target.value)}></input>
-                <label>Soil Moisture</label>
-                <input id="soil-moisture" onChange={(e) => setSoilMoisture(e.target.value)}></input>
-                <label>Soil Temperature (Celsius)</label>
-                <input id="soil-temp" onChange={(e) => setSoilTemp(e.target.value)}></input>
-                <label>Vegetation Height (cm)</label>
-                <input id="veg-height" onChange={(e) => setVegHeight(e.target.value)}></input>
-                <label>Vegetation Type</label>
-                <input id="veg-type" onChange={(e) => setVegType(e.target.value)}></input>
-                <label>Notes</label>
-                <input id="notes" onChange={(e) => setNotes(e.target.value)}></input>
-                <button id="submitCollection" type="submit" onClick={startCollecting}>Submit</button>
+                <p>Select sensor: </p>
+                <Select
+                    labelId="sensor-select-label"
+                    id="sensor-select"
+                    value={sensor}
+                    label="Sensor"
+                    onChange={(e) => setSensor(e.target.value)}
+                >
+                    {props.sensorNames.map((name) => {
+                        return <MenuItem value={name}>{name}</MenuItem>;
+                    })}
+                </Select>
+                <p>...or write sensor in (NO whitespace after): </p>
+                <TextField id="sensor-text" label="Sensor" variant="outlined" onChange={(e) => setSensor(e.target.value)}></TextField>
+                <p></p>
+                <TextField id="x" label="X" variant="outlined" onChange={(e) => setX(e.target.value)}></TextField>
+                <p></p>
+                <TextField id="y" label="Y" variant="outlined" onChange={(e) => setY(e.target.value)}></TextField>
+                <p></p>
+                <TextField id="soil-moisture" label="Soil Moisture" variant="outlined" onChange={(e) => setSoilMoisture(e.target.value)}></TextField>
+                <p></p>
+                <TextField id="soil-temp" label="Soil Temp (C)" variant="outlined" onChange={(e) => setSoilTemp(e.target.value)}></TextField>
+                <p></p>
+                <TextField id="veg-height" label="Vegetation Height (cm)" variant="outlined" onChange={(e) => setVegHeight(e.target.value)}></TextField>
+                <p></p>
+                <TextField id="veg-type" label="Vegetation type" variant="outlined" onChange={(e) => setVegType(e.target.value)}></TextField>
+                <p></p>
+                <TextField id="notes" label="Notes" variant="outlined" onChange={(e) => setNotes(e.target.value)}></TextField>
+                <p></p>
+                <Button id="submit-collection" type="submit" variant="contained" onClick={startCollecting}>Submit</Button>
             </div>
         );
     }

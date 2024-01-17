@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/system/Box';
 
 function CollectionForm(props) {
-    const [fieldTeam, setFieldTeam] = React.useState("");
-    const [weather, setWeather] = React.useState("");
-    const [notes, setNotes] = React.useState("");
+    const [fieldTeam, setFieldTeam] = useState("");
+    const [weather, setWeather] = useState("");
+    const [notes, setNotes] = useState("");
 
     // updates the spreadsheet w info about the collection
     function updateCollectionInfo() {
@@ -19,7 +22,7 @@ function CollectionForm(props) {
             gapi.client.sheets.spreadsheets.values.update({
                 spreadsheetId: props.spreadsheetId,
                 range: "A1",
-                valueInputOption: "RAW",
+                valueInputOption: "USER-ENTERED",
                 resource: body,
             }).then((response) => {
                 const result = response.result;
@@ -35,13 +38,13 @@ function CollectionForm(props) {
 
     return (
         <div>
-            <label>Field Team (comma-separated names)</label>
-            <input id="field-team" onChange={(e) => setFieldTeam(e.target.value)}></input>
-            <label>Weather</label>
-            <input id="weather" onChange={(e) => setWeather(e.target.value)}></input>
-            <label>Notes</label>
-            <input id="notes" onChange={(e) => setNotes(e.target.value)}></input>
-            <button id="submit-collection" type="submit" onClick={updateCollectionInfo}>Submit</button>
+            <TextField id="field-team" label="Field Team" variant="outlined" onChange={(e) => setFieldTeam(e.target.value)}></TextField>
+            <p></p>
+            <TextField id="weather" label="Weather" variant="outlined" onChange={(e) => setWeather(e.target.value)}></TextField>
+            <p></p>
+            <TextField id="notes" label="Notes" variant="outlined" onChange={(e) => setNotes(e.target.value)}></TextField>
+            <p></p>
+            <Button id="submit-collection" type="submit" variant="contained" onClick={updateCollectionInfo}>Submit</Button>
         </div>
     );
 }
