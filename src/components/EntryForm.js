@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+// import Timer from './Timer.js';
+// TODO fix timer
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
@@ -74,8 +76,9 @@ export default function EntryForm(props) {
         }
     }
 
+    // TODO: create a separate component for collecting data page
     if (collectingData) {
-        var endTime = new Date(startTime.getTime() + 10 * 60000);
+        const endTime = new Date(startTime.getTime() + 10 * 60000);
         return (
             <div>
                 <Button id="add-entry-gps" variant="contained" onClick={addEntryWithGPS}>End Data Collection</Button>

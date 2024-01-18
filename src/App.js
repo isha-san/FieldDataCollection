@@ -16,6 +16,11 @@ export default function App() {
     document.getElementById("error-message").innerText = "Error " + errorString;
   }
 
+  function resetSteps() {
+    setCollectionStep(0);
+    setEntryStep(0);
+  }
+
   async function getToken(err) {
     if (err.result.error.code == 401 || (err.result.error.code == 403) &&
         (err.result.error.status == "PERMISSION_DENIED")) {
@@ -94,24 +99,25 @@ export default function App() {
 
   var body; 
 
-  // TODO: fix logout button - not displaying
+  // TODO: thoroughly test logout button
   // TODO: make it so that the collection spreadsheet is created when the user hits "submit"
   // and not before. "New Collection" should just change state
 
-  if (collectionStep === 2) {
+  if (collectionStep === 0) {
     body = (
       <div> 
         {spreadsheetId != "" ? 
           <Button id="revoke-btn" variant="outlined" onClick={revokeToken}>Log Out of Google</Button>
         : <></>}
+        <p></p>
         <Button id="new-collection-btn" variant="contained" onClick={createSpreadsheet}>New Collection</Button>
       </div>
     );
-  } else if (collectionStep === 2) {
+  } else if (collectionStep === 1) {
     body = (
       <div>
         <p>Note: if you cancel a collection before creating it, a blank spreadsheet will still be created in your Google account.</p>
-        <Button id="cancel-collection-btn" variant="outlined" onClick={() => setCollectionStep(0)}>Cancel Collection</Button>
+        <Button id="cancel-collection-btn" variant="outlined" onClick={() => resetSteps()}>Cancel Collection</Button>
         <p></p>
         <CollectionForm spreadsheetId={spreadsheetId} onUpdate={() => setCollectionStep(2)}></CollectionForm>
       </div>
@@ -121,12 +127,17 @@ export default function App() {
       body = (
       <div>
         <Button id="new-entry-btn" variant="contained" onClick={() => setEntryStep(1)}>New Entry</Button>
+        <p></p>
+        <Button id="cancel-collection-btn" variant="outlined" onClick={() => resetSteps()}>Cancel Collection</Button>
       </div>
       )
     } else {
       body = (
         <div>
           <Button id="cancel-entry-btn" variant="outlined" onClick={() => setEntryStep(0)}>Cancel Entry</Button>
+          <p></p>
+          <Button id="cancel-collection-btn" variant="outlined" onClick={() => resetSteps()}>Cancel Collection</Button>
+          <p></p>
           <EntryForm spreadsheetId={spreadsheetId} sensorNames={sensorNames}></EntryForm>
         </div>
       );
