@@ -4,6 +4,8 @@ import Button from '@mui/material/Button';
 import Box from '@mui/system/Box';
 
 function CollectionForm(props) {
+    const gapi = window.gapi;
+    
     const [fieldTeam, setFieldTeam] = useState("");
     const [weather, setWeather] = useState("");
     const [notes, setNotes] = useState("");

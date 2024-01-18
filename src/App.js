@@ -5,6 +5,10 @@ import Button from '@mui/material/Button';
 import Box from '@mui/system/Box';
 
 export default function App() {
+  const tokenClient = window.tokenClient;
+  const gapi = window.gapi;
+  const google = window.google;
+
   // 0 = not started; 1 = in progress of starting; 2 = started collection
   const [collectionStep, setCollectionStep] = useState(0); 
   // 0 = not started; 1 = in progress of starting or collecting data
@@ -47,7 +51,7 @@ export default function App() {
       });
     } else {
       // Errors unrelated to authorization: server errors, exceeding quota, bad requests, and so on.
-      error = new Error(err)
+      let error = new Error(err);
       displayError(JSON.stringify(error));
       throw error;
     }

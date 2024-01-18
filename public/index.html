@@ -78,13 +78,8 @@
   
     })();
     </script>
-    <script async defer src="https://accounts.google.com/gsi/client?onload=triggerGoogleLoaded" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
-    <script async defer src="https://apis.google.com/js/api.js?onload=triggerGoogleLoaded" onload="gapiLoadOkay()" onerror="gapiLoadFail(event)"></script>
-    <script type="text/javascript">
-      function triggerGoogleLoaded() {
-        window.dispatchEvent(new Event('google-loaded'));
-      }
-    </script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoadOkay()" onerror="gapiLoadFail(event)"></script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

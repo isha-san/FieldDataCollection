@@ -8,6 +8,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 // TODO: add user written sensor names to the global list of sensor names
 export default function EntryForm(props) {
+    const gapi = window.gapi;
+    
     const [collectingData, setCollectingData] = useState(false);
     const [sensor, setSensor] = useState("");
     const [startTime, setStartTime] = useState(new Date());
