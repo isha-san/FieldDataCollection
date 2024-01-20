@@ -29,7 +29,7 @@ export default function App() {
     if (err.result.error.code == 401 || (err.result.error.code == 403) &&
         (err.result.error.status == "PERMISSION_DENIED")) {
   
-      // The access token is missing, invalid, or expired, prompt for user consent to obtain one.
+      // Access token is missing, invalid, or expired, prompt for user consent to obtain one.
       await new Promise((resolve, reject) => {
         try {
           // Settle this promise in the response callback for requestAccessToken()
