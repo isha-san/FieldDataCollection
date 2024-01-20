@@ -30,7 +30,7 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script>
-    const CLIENT_ID = '998889237649-387kohftvcpdd9sc9cv7k16s3cl6iafk.apps.googleusercontent.com';
+    const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
     const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
     const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
     
