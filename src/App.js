@@ -8,13 +8,13 @@ export default function App() {
   const tokenClient = window.tokenClient;
   const gapi = window.gapi;
   const google = window.google;
+  const sensorNames = ["Peso", "Tweak", "Shelling", "Captain Barnacles", "Kwazii", "Inkling", "Dashi", "Tunip"];
 
   // 0 = not started; 1 = in progress of starting; 2 = started collection
   const [collectionStep, setCollectionStep] = useState(0); 
   // 0 = not started; 1 = in progress of starting or collecting data
   const [entryStep, setEntryStep] = useState(0);
   const [spreadsheetId, setSpreadsheetId] = useState("");
-  const [sensorNames, setSensorNames] = useState(["Peso", "Tweak", "Shelling", "Captain Barnacles", "Kwazii", "Inkling", "Dashi", "Tunip"]);
   
   function displayError(errorString) {
     document.getElementById("error-message").innerText = "Error " + errorString;
@@ -26,8 +26,8 @@ export default function App() {
   }
 
   async function getToken(err) {
-    if (err.result.error.code == 401 || (err.result.error.code == 403) &&
-        (err.result.error.status == "PERMISSION_DENIED")) {
+    if ((err.result.error.code === 401 || err.result.error.code === 403) &&
+        (err.result.error.status === "PERMISSION_DENIED")) {
   
       // Access token is missing, invalid, or expired, prompt for user consent to obtain one.
       await new Promise((resolve, reject) => {
@@ -72,7 +72,8 @@ export default function App() {
     var current = new Date();
     gapi.client.sheets.spreadsheets.create({
     properties: {
-        title: "Flux Data " + "/" + (current.getMonth()+1) + "/" + current.getDate() + "/" + current.getFullYear()
+      // title: `${Flux Data} ${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`,
+      title: "Flux Data " + (current.getMonth()+1) + "/" + current.getDate() + "/" + current.getFullYear()
     }
     })
     .then(
@@ -110,7 +111,7 @@ export default function App() {
   if (collectionStep === 0) {
     body = (
       <div> 
-        {spreadsheetId != "" ? 
+        {spreadsheetId !== "" ? 
           <Button id="revoke-btn" variant="outlined" onClick={revokeToken}>Log Out of Google</Button>
         : <></>}
         <p></p>
@@ -157,6 +158,6 @@ export default function App() {
     >
       {body}
     </Box>
-    <h2 id="error-message"></h2>
+    <p id="error-message"></p>
   </div>);
 }

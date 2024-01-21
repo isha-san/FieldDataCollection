@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Box from '@mui/system/Box';
 
 function CollectionForm(props) {
     const gapi = window.gapi;

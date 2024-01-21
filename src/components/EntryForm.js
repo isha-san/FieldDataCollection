@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 
 // TODO: add user written sensor names to the global list of sensor names
 export default function EntryForm(props) {
