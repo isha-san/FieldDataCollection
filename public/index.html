@@ -30,16 +30,11 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script>
-    const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+    const CLIENT_ID = REACT_APP_CLIENT_ID;
     console.log("Client ID:", CLIENT_ID);
     const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
     const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
     
-    let gapiLoadOkay;
-    let gisLoadOkay;
-    let gapiLoadFail;
-    let gisLoadFail;
-
     const gapiLoadPromise = new Promise((resolve, reject) => {
       gapiLoadOkay = resolve;
       gapiLoadFail = reject;
@@ -48,10 +43,11 @@
       gisLoadOkay = resolve;
       gisLoadFail = reject;
     });
-
+  
     var tokenClient;
   
     (async () => {
+  
       // First, load and initialize the gapi.client
       await gapiLoadPromise;
       await new Promise((resolve, reject) => {
@@ -64,7 +60,7 @@
       .then(function() {  // Load the Sheets API discovery document.
         gapi.client.load(DISCOVERY_DOC);
       });
-
+  
       // Now load the GIS client
       await gisLoadPromise;
       await new Promise((resolve, reject) => {
@@ -80,6 +76,7 @@
           reject(err);
         }
       });
+  
     })();
     </script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
