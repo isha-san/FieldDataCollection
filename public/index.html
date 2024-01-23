@@ -29,6 +29,8 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoadOkay()" onerror="gapiLoadFail(event)"></script>
     <script>
     const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
     console.log("Client ID:", CLIENT_ID);
@@ -43,11 +45,10 @@
       gisLoadOkay = resolve;
       gisLoadFail = reject;
     });
-  
+
     var tokenClient;
   
     (async () => {
-  
       // First, load and initialize the gapi.client
       await gapiLoadPromise;
       await new Promise((resolve, reject) => {
@@ -60,7 +61,7 @@
       .then(function() {  // Load the Sheets API discovery document.
         gapi.client.load(DISCOVERY_DOC);
       });
-  
+
       // Now load the GIS client
       await gisLoadPromise;
       await new Promise((resolve, reject) => {
@@ -76,11 +77,9 @@
           reject(err);
         }
       });
-  
     })();
+ 
     </script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoadOkay()" onerror="gapiLoadFail(event)"></script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

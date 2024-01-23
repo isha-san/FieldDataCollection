@@ -8,6 +8,7 @@ export default function App() {
   const tokenClient = window.tokenClient;
   const gapi = window.gapi;
   const google = window.google;
+  
   const sensorNames = ["Peso", "Tweak", "Shelling", "Captain Barnacles", "Kwazii", "Inkling", "Dashi", "Tunip"];
 
   // 0 = not started; 1 = in progress of starting; 2 = started collection
@@ -26,18 +27,17 @@ export default function App() {
   }
 
   async function getToken(err) {
-    if ((err.result.error.code === 401 || err.result.error.code === 403) &&
-        (err.result.error.status === "PERMISSION_DENIED")) {
-  
-      // Access token is missing, invalid, or expired, prompt for user consent to obtain one.
+
+    if (err.result.error.code === 401 || (err.result.error.code === 403 &&
+        err.result.error.status === "PERMISSION_DENIED")) {
+
+      // The access token is missing, invalid, or expired, prompt for user consent to obtain one.
       await new Promise((resolve, reject) => {
         try {
           // Settle this promise in the response callback for requestAccessToken()
           tokenClient.callback = (resp) => {
-            console.log('RESPONSE STRUCTURE ', resp);
             if (resp.error !== undefined) {
               reject(resp);
-              displayError(JSON.stringify(resp.error));
             }
             // GIS has automatically updated gapi.client with the newly issued access token.
             console.log('gapi.client access token: ' + JSON.stringify(gapi.client.getToken()));
@@ -45,15 +45,12 @@ export default function App() {
           };
           tokenClient.requestAccessToken();
         } catch (err) {
-          console.log(err);
-          displayError(JSON.stringify(err));
+          console.log(err)
         }
       });
     } else {
       // Errors unrelated to authorization: server errors, exceeding quota, bad requests, and so on.
-      let error = new Error(err);
-      displayError(JSON.stringify(error));
-      throw error;
+      throw new Error(err);
     }
   }
 
