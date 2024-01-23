@@ -29,14 +29,17 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoadOkay()" onerror="gapiLoadFail(event)"></script>
     <script>
     const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
     console.log("Client ID:", CLIENT_ID);
     const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
     const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
     
+    let gapiLoadOkay;
+    let gisLoadOkay;
+    let gapiLoadFail;
+    let gisLoadFail;
+
     const gapiLoadPromise = new Promise((resolve, reject) => {
       gapiLoadOkay = resolve;
       gapiLoadFail = reject;
@@ -78,8 +81,9 @@
         }
       });
     })();
- 
     </script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoadOkay()" onerror="gapiLoadFail(event)"></script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
