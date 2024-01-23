@@ -16,6 +16,9 @@ jobs:
         env:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
         run: |
+          git config --global url.https://${{ secrets.GH_TOKEN }}@github.com/.insteadOf https://github.com/
+          git config --global user.email "isha.sangani@outlook.com"
+          git config --global user.name "isha-san"
           npm install
           npm install gh-pages --save-dev
           npm run build
