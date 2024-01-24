@@ -1,5 +1,5 @@
 {
-  "homepage": "http://isha-san.github.io/FieldDataCollection",
+  "homepage": "https://isha-san.github.io/FieldDataCollection",
   "name": "data-app",
   "version": "0.1.0",
   "private": true,
@@ -20,8 +20,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "predeploy": "npm run build",
+    "start": "set HTTPS=true&&react-scripts start",
+    "predeploy": "set HTTPS=true&&npm run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
