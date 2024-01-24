@@ -3,6 +3,7 @@ import CollectionForm from './components/CollectionForm.js';
 import EntryForm from './components/EntryForm.js';
 import Button from '@mui/material/Button';
 import Box from '@mui/system/Box';
+require('dotenv').config();
 
 export default function App() {
   const tokenClient = window.tokenClient;
