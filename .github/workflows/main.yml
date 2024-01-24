@@ -22,4 +22,4 @@ jobs:
           npm run build
           npm run deploy
         env:
-          REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+          REACT_APP_SPARTINA: ${{ vars.REACT_APP_SPARTINA }}
