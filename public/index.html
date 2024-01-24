@@ -30,7 +30,8 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script>
-    const SPARTINA = process.env.REACT_APP_SPARTINA;
+    const { env } = require('process');
+    const SPARTINA = env.REACT_APP_SPARTINA;
     console.log("Spartina:", SPARTINA);
     const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
     const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
