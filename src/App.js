@@ -5,9 +5,11 @@ import Button from '@mui/material/Button';
 import Box from '@mui/system/Box';
 
 export default function App() {
-  const tokenClient = window.tokenClient;
-  const gapi = window.gapi;
-  const google = window.google;
+  var tokenClient = window.tokenClient;
+  var gapi = window.gapi;
+  var google = window.google;
+  console.log("we have redelcared.");
+  console.log('token client value', tokenClient);
   
   const sensorNames = ["Peso", "Tweak", "Shelling", "Captain Barnacles", "Kwazii", "Inkling", "Dashi", "Tunip"];
 
@@ -16,7 +18,7 @@ export default function App() {
   // 0 = not started; 1 = in progress of starting or collecting data
   const [entryStep, setEntryStep] = useState(0);
   const [spreadsheetId, setSpreadsheetId] = useState("");
-  
+
   function displayError(errorString) {
     document.getElementById("error-message").innerText = "Error " + errorString;
   }
@@ -62,8 +64,13 @@ export default function App() {
       setSpreadsheetId("");
     }
   }
-
   function createSpreadsheet() {
+    // check that everything is loaded
+    if (!tokenClient || !google || !gapi) {
+      // somehow these variables never load. ummmm
+      console.log("hi");
+      throw new Error('API variables not yet loaded');
+    }
     // If a valid access token is needed,
     // prompt to obtain one and then retry the original request.
     var current = new Date();
@@ -99,6 +106,22 @@ export default function App() {
     }); // cancelled by user, timeout, etc.
   }
 
+  function tryCreateSpreadsheet() {
+    document.getElementById("loading-msg").innerText = "Loading...";
+    const intervalId = setInterval(() => {
+      try {
+        createSpreadsheet();
+        // we are not getting here
+        console.log("hey bish");
+        clearInterval(intervalId);
+        document.getElementById("loading-msg").innerText = "";
+      } catch {
+        document.getElementById("loading-msg").innerText = "Loading...";
+      }
+    }, 200);
+    // issue: not TRYINg w full api call, just waiting for gapi to laod
+  }
+
   var body; 
 
   // TODO: thoroughly test logout button
@@ -112,7 +135,8 @@ export default function App() {
           <Button id="revoke-btn" variant="outlined" onClick={revokeToken}>Log Out of Google</Button>
         : <></>}
         <p></p>
-        <Button id="new-collection-btn" variant="contained" onClick={createSpreadsheet}>New Collection</Button>
+        <Button id="new-collection-btn" variant="contained" onClick={tryCreateSpreadsheet}>New Collection</Button>
+        <p id="loading-msg"></p>
       </div>
     );
   } else if (collectionStep === 1) {

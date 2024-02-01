@@ -24,63 +24,63 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Collect Field Data</title>
+    <script>
+      
+      const SPARTINA = "998889237649-qqk0he953vqeji57q9jh28kojmamipne.apps.googleusercontent.com";
+      const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
+      const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
+      
+      const gapiLoadPromise = new Promise((resolve, reject) => {
+        gapiLoadOkay = resolve;
+        gapiLoadFail = reject;
+      });
+      const gisLoadPromise = new Promise((resolve, reject) => {
+        gisLoadOkay = resolve;
+        gisLoadFail = reject;
+      });
+    
+      var tokenClient;
+    
+      (async () => {
+    
+        // First, load and initialize the gapi.client
+        await gapiLoadPromise;
+        await new Promise((resolve, reject) => {
+          // NOTE: the 'auth2' module is no longer loaded.
+          gapi.load('client', {callback: resolve, onerror: reject});
+        });
+        await gapi.client.init({
+          // NOTE: OAuth2 'scope' and 'spartina' parameters have moved to initTokenClient().
+        })
+        .then(function() {  // Load the Sheets API discovery document.
+          gapi.client.load(DISCOVERY_DOC);
+        });
+    
+        // Now load the GIS client
+        await gisLoadPromise;
+        await new Promise((resolve, reject) => {
+          try {
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: SPARTINA,
+                scope: SCOPES,
+                prompt: 'consent',
+                callback: '',  // defined at request time in await/promise scope.
+            });
+            resolve();
+          } catch (err) {
+            reject(err);
+          }
+        });
+    
+      })();
+    </script>
+    <script src="https://accounts.google.com/gsi/client" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
+    <script src="https://apis.google.com/js/api.js" onload="gapiLoadOkay()" onerror="gapiLoadFail(event)"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script>
-      
-    const SPARTINA = "998889237649-qqk0he953vqeji57q9jh28kojmamipne.apps.googleusercontent.com";
-    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
-    const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
-    
-    const gapiLoadPromise = new Promise((resolve, reject) => {
-      gapiLoadOkay = resolve;
-      gapiLoadFail = reject;
-    });
-    const gisLoadPromise = new Promise((resolve, reject) => {
-      gisLoadOkay = resolve;
-      gisLoadFail = reject;
-    });
-  
-    var tokenClient;
-  
-    (async () => {
-  
-      // First, load and initialize the gapi.client
-      await gapiLoadPromise;
-      await new Promise((resolve, reject) => {
-        // NOTE: the 'auth2' module is no longer loaded.
-        gapi.load('client', {callback: resolve, onerror: reject});
-      });
-      await gapi.client.init({
-        // NOTE: OAuth2 'scope' and 'spartina' parameters have moved to initTokenClient().
-      })
-      .then(function() {  // Load the Sheets API discovery document.
-        gapi.client.load(DISCOVERY_DOC);
-      });
-  
-      // Now load the GIS client
-      await gisLoadPromise;
-      await new Promise((resolve, reject) => {
-        try {
-          tokenClient = google.accounts.oauth2.initTokenClient({
-              client_id: SPARTINA,
-              scope: SCOPES,
-              prompt: 'consent',
-              callback: '',  // defined at request time in await/promise scope.
-          });
-          resolve();
-        } catch (err) {
-          reject(err);
-        }
-      });
-  
-    })();
-    </script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoadOkay()" onerror="gisLoadFail(event)"></script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoadOkay()" onerror="gapiLoadFail(event)"></script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
