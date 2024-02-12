@@ -173,11 +173,16 @@ export default function App() {
   }
   return (
   <div>
+    {/* Header */}
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <h2>Carbon Flux Data Collector</h2>
+        <p>Use this site to collect additional metadata when collecting carbon fluxes.</p>
+    </div>
     <Box
       display="flex"
       justifyContent="center"
       alignItems="center"
-      minHeight="80vh"
+      minHeight="55vh"
     >
       {body}
     </Box>
