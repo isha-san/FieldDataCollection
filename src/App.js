@@ -1,4 +1,5 @@
 import React,{ useState } from 'react';
+import Footer from './components/Footer.js';
 import CollectionForm from './components/CollectionForm.js';
 import EntryForm from './components/EntryForm.js';
 import Button from '@mui/material/Button';
@@ -176,10 +177,11 @@ export default function App() {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      minHeight="100vh"
+      minHeight="80vh"
     >
       {body}
     </Box>
+    <Footer />
     <p id="error-message"></p>
   </div>);
 }
