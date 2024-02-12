@@ -134,6 +134,7 @@ export default function App() {
         {spreadsheetId !== "" ? 
           <Button id="revoke-btn" variant="outlined" onClick={revokeToken}>Log Out of Google</Button>
         : <></>}
+        <p>Note: if the "New Collection" button is not working, just reload the page!</p>
         <p></p>
         <Button id="new-collection-btn" variant="contained" onClick={tryCreateSpreadsheet}>New Collection</Button>
         <p id="loading-msg"></p>
