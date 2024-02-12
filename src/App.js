@@ -145,7 +145,7 @@ export default function App() {
     body = (
       <div>
         <p>Note: if you cancel a collection before creating it, a blank spreadsheet will still be created in your Google account.</p>
-        <Button id="cancel-collection-btn" variant="outlined" onClick={() => resetSteps()}>Cancel Collection</Button>
+        <Button id="cancel-collection-btn" variant="outlined" onClick={() => resetSteps()}>End Collection</Button>
         <p></p>
         <CollectionForm spreadsheetId={spreadsheetId} onUpdate={() => setCollectionStep(2)}></CollectionForm>
       </div>
@@ -156,7 +156,7 @@ export default function App() {
       <div>
         <Button id="new-entry-btn" variant="contained" onClick={() => setEntryStep(1)}>New Entry</Button>
         <p></p>
-        <Button id="cancel-collection-btn" variant="outlined" onClick={() => resetSteps()}>Cancel Collection</Button>
+        <Button id="cancel-collection-btn" variant="outlined" onClick={() => resetSteps()}>End Collection</Button>
       </div>
       )
     } else {
@@ -164,7 +164,7 @@ export default function App() {
         <div>
           <Button id="cancel-entry-btn" variant="outlined" onClick={() => setEntryStep(0)}>Cancel Entry</Button>
           <p></p>
-          <Button id="cancel-collection-btn" variant="outlined" onClick={() => resetSteps()}>Cancel Collection</Button>
+          <Button id="cancel-collection-btn" variant="outlined" onClick={() => resetSteps()}>End Collection</Button>
           <p></p>
           <EntryForm spreadsheetId={spreadsheetId} sensorNames={sensorNames}></EntryForm>
         </div>

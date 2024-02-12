@@ -83,7 +83,7 @@ export default function EntryForm(props) {
         const endTime = new Date(startTime.getTime() + 10 * 60000);
         return (
             <div>
-                <Button id="add-entry-gps" variant="contained" onClick={addEntryWithGPS}>End Data Collection</Button>
+                <Button id="add-entry-gps" variant="contained" onClick={addEntryWithGPS}>End Measurement</Button>
                 <h2>Your data collection started at {startTime.getHours()}:{startTime.getMinutes()}.</h2>
                 <h2>Your data collection should end at {endTime.getHours()}:{endTime.getMinutes()}.</h2>
             </div>
@@ -104,7 +104,7 @@ export default function EntryForm(props) {
                     })}
                 </Select>
                 <p>...or write sensor in (NO whitespace after): </p>
-                <TextField id="sensor-text" label="Sensor" variant="outlined" onChange={(e) => setSensor(e.target.value)}></TextField>
+                <TextField id="sensor-text" label="Sensor" variant="outlined" onChange={(e) => {e.target.value !== "" ? setSensor(e.target.value) : setSensor(sensor)}}></TextField>
                 <p></p>
                 <TextField id="x" label="X" variant="outlined" onChange={(e) => setX(e.target.value)}></TextField>
                 <p></p>
