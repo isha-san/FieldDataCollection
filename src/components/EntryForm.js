@@ -39,7 +39,7 @@ export default function EntryForm(props) {
             gapi.client.sheets.spreadsheets.values.append({
               spreadsheetId: props.spreadsheetId,
               range: "Sheet1",
-              valueInputOption: "USER-ENTERED",
+              valueInputOption: "RAW",
               resource: body,
             }).then((response) => {
               const result = response.result;
@@ -55,8 +55,14 @@ export default function EntryForm(props) {
     // adds a new row to the Google spreadsheet for the collection 
     function addEntryWithGPS() {
         var endTime = new Date();
+        const sh = startTime.getHours();
+        const eh = endTime.getHours();
+        const startAmOrPm = sh >= 0 && sh < 12 ? "AM" : "PM";
+        const endAmOrPm = eh >= 0 && eh < 12 ? "AM" : "PM";
         const date = (startTime.getMonth()+1) + "/" + startTime.getDate() + "/" + startTime.getFullYear();
-        let values = [[sensor, date, X, Y, `${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()}`, `${endTime.getHours()}:${endTime.getMinutes()}:${endTime.getSeconds()}`, -1, -1, soilMoisture, soilTemp, vegHeight, vegType, notes]];
+        const s = `${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()} ${startAmOrPm}`;
+        const e = `${endTime.getHours()}:${endTime.getMinutes()}:${endTime.getSeconds()} ${endAmOrPm}`;
+        let values = [[sensor, date, X, Y, s, e, -1, -1, soilMoisture, soilTemp, vegHeight, vegType, notes]];
         // get gps coordinates
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
@@ -104,23 +110,23 @@ export default function EntryForm(props) {
                     })}
                 </Select>
                 <p>...or write sensor in (NO whitespace after): </p>
-                <TextField id="sensor-text" label="Sensor" variant="outlined" onChange={(e) => {e.target.value !== "" ? setSensor(e.target.value) : setSensor(sensor)}}></TextField>
+                <TextField id="sensor-text" label="Sensor" className="form-field-1" variant="outlined" onChange={(e) => {e.target.value !== "" ? setSensor(e.target.value) : setSensor(sensor)}}></TextField>
                 <p></p>
-                <TextField id="x" label="X" variant="outlined" onChange={(e) => setX(e.target.value)}></TextField>
+                <TextField id="x" label="X" className="form-field-1" variant="outlined" onChange={(e) => setX(e.target.value)}></TextField>
                 <p></p>
-                <TextField id="y" label="Y" variant="outlined" onChange={(e) => setY(e.target.value)}></TextField>
+                <TextField id="y" label="Y" className="form-field-1" variant="outlined" onChange={(e) => setY(e.target.value)}></TextField>
                 <p></p>
-                <TextField id="soil-moisture" label="Soil Moisture" variant="outlined" onChange={(e) => setSoilMoisture(e.target.value)}></TextField>
+                <TextField id="soil-moisture" label="Soil Moisture" className="form-field-1" variant="outlined" onChange={(e) => setSoilMoisture(e.target.value)}></TextField>
                 <p></p>
-                <TextField id="soil-temp" label="Soil Temp (C)" variant="outlined" onChange={(e) => setSoilTemp(e.target.value)}></TextField>
+                <TextField id="soil-temp" label="Soil Temp (C)" className="form-field-1" variant="outlined" onChange={(e) => setSoilTemp(e.target.value)}></TextField>
                 <p></p>
-                <TextField id="veg-height" label="Vegetation Height (cm)" variant="outlined" onChange={(e) => setVegHeight(e.target.value)}></TextField>
+                <TextField id="veg-height" label="Vegetation Height (cm)" className="form-field-1"variant="outlined" onChange={(e) => setVegHeight(e.target.value)}></TextField>
                 <p></p>
-                <TextField id="veg-type" label="Vegetation type" variant="outlined" onChange={(e) => setVegType(e.target.value)}></TextField>
+                <TextField id="veg-type" label="Vegetation type" className="form-field-1" variant="outlined" onChange={(e) => setVegType(e.target.value)}></TextField>
                 <p></p>
-                <TextField id="notes" label="Notes" variant="outlined" onChange={(e) => setNotes(e.target.value)}></TextField>
+                <TextField id="notes" label="Notes" className="form-field-1" variant="outlined" onChange={(e) => setNotes(e.target.value)}></TextField>
                 <p></p>
-                <Button id="submit-collection" type="submit" variant="contained" onClick={startCollecting}>Submit</Button>
+                <Button id="submit-collection" type="submit" className="form-field-1" variant="contained" onClick={startCollecting}>Submit</Button>
             </div>
         );
     }

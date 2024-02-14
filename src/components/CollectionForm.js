@@ -39,13 +39,13 @@ function CollectionForm(props) {
 
     return (
         <div>
-            <TextField id="field-team" label="Field Team" variant="outlined" onChange={(e) => setFieldTeam(e.target.value)}></TextField>
+            <TextField id="field-team" label="Field Team" className="form-field-1" variant="outlined" onChange={(e) => setFieldTeam(e.target.value)}></TextField>
             <p></p>
-            <TextField id="weather" label="Weather" variant="outlined" onChange={(e) => setWeather(e.target.value)}></TextField>
+            <TextField id="weather" label="Weather" className="form-field-1" variant="outlined" onChange={(e) => setWeather(e.target.value)}></TextField>
             <p></p>
-            <TextField id="notes" label="Notes" variant="outlined" onChange={(e) => setNotes(e.target.value)}></TextField>
+            <TextField id="notes" label="Notes" className="form-field-1" variant="outlined" onChange={(e) => setNotes(e.target.value)}></TextField>
             <p></p>
-            <Button id="submit-collection" type="submit" variant="contained" onClick={updateCollectionInfo}>Submit</Button>
+            <Button id="submit-collection" type="submit" className="form-field-1" variant="contained" onClick={updateCollectionInfo}>Submit</Button>
         </div>
     );
 }

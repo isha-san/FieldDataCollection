@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.form-field-1 {
+  min-width: 50vw;
+}
