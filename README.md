@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Carbon Flux Data Collector
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A mobile-friendly web app for recording field metadata alongside carbon flux
+measurements. Built for the Fulweiler Lab @ Boston University.
 
-## Available Scripts
+Field teams use this app on-site (phone or tablet) to log the context around
+each flux sensor reading — location, timing, soil conditions, vegetation —
+without a paper datasheet. Each entry is written directly to a Google Sheet,
+so data is available immediately and doesn't need to be transcribed later.
 
-In the project directory, you can run:
+## What it does
 
-### `npm start`
+- **Sign in with Google** — authenticates via Google Identity Services /
+  OAuth (`src/App.js`) to get access to Google Sheets on the user's account.
+- **Start a new collection** — creates a new Google Sheet (titled
+  `Flux Data M/D/YYYY`) for the day's session.
+- **Record collection-level info** (`CollectionForm`) — field team, weather,
+  and general notes, written as a header in the new sheet.
+- **Log individual entries** (`EntryForm`) — for each sensor deployment,
+  select or type a sensor name, then record:
+  - GPS coordinates (via the browser's geolocation API)
+  - Start/end timestamps for the measurement
+  - Soil moisture and soil temperature
+  - Vegetation height and type
+  - Free-text notes
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  Each entry is appended as a new row to the active spreadsheet.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech stack
 
-### `npm test`
+- React 18 (Create React App)
+- Material UI (`@mui/material`) for form components
+- Google API client (`gapi`) + Google Identity Services for OAuth and the
+  Sheets API
+- Deployed to GitHub Pages via `gh-pages`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting started
 
-### `npm run build`
+```bash
+npm install
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Runs the app at [http://localhost:3000](http://localhost:3000). Note the
+`start` script forces HTTPS, which Google OAuth requires even in local dev —
+accept the browser's self-signed certificate warning to proceed.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Other scripts
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- `npm test` — run tests in watch mode
+- `npm run build` — production build to `build/`
+- `npm run deploy` — build and publish to GitHub Pages (`gh-pages`)
 
-### `npm run eject`
+## Configuration
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The app authenticates against a Google Cloud OAuth client and calls the
+Sheets API. The client ID, OAuth scope, and Sheets discovery document are
+configured in `public/index.html`. To point the app at a different Google
+Cloud project, update the `SPARTINA` (client ID) constant there.
